@@ -21,6 +21,18 @@ namespace tech_test_payment_api.Controllers
             _context = context;
         }
 
+        [HttpGet("{categoriaId}")]
+        public IActionResult ObterCategoriaPorId(int categoriaId)
+        {
+            var categoria = _context.Categorias.Find(categoriaId);
+
+            if(categoria != null)
+                return Ok(categoria);
+
+            return NotFound();
+        }
+        
+
         [HttpPost]
         public IActionResult CriarCategoria(Categoria categoria)
         {
