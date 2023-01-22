@@ -5,28 +5,32 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using tech_test_payment_api.Context;
+using tech_test_payment_api.Models;
 
 namespace tech_test_payment_api.Controllers
 {
+    [ApiController]
     [Route("[controller]")]
-    public class Categoria : Controller
+    public class CategoriaController : ControllerBase
     {
-        private readonly ILogger<Categoria> _logger;
+        private readonly OrganizadorContext _context;
 
-        public Categoria(ILogger<Categoria> logger)
+        public CategoriaController(OrganizadorContext context)
         {
-            _logger = logger;
+            _context = context;
         }
 
-        public IActionResult Index()
+        [HttpPost]
+        public IActionResult CriarCategoria(Categoria categoria)
         {
-            return View();
-        }
+            if(categoria.Nome == null)
+                return BadRequest(new { Erro = "O nome da Categoria é obrigatório!" });
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View("Error!");
-        }
+            _context.Add(categoria);
+            _context.SaveChanges();
+            return CreatedAtAction(nameof(ObterCategoriaPorId), new { categoriaId = categoria.CategoriaID }, categoria);    
+        }   
+
     }
 }
