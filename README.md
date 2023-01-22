@@ -31,5 +31,5 @@
 - Arquitetura da aplicação - embora não existam muitos requisitos de negócio, iremos avaliar como o projeto foi estruturada, bem como camadas e suas responsabilidades;
 - Programação orientada a objetos;
 - Boas práticas e princípios como SOLID, DDD (opcional), DRY, KISS;
-- Testes unitários;
+- Testes unitários ;
 - Uso correto do padrão REST;
