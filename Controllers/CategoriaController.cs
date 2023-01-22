@@ -32,6 +32,12 @@ namespace tech_test_payment_api.Controllers
             return NotFound();
         }
         
+        [HttpGet("ObterTodasAsCategorias")]
+        public IActionResult ObterTodasAsCategorias()
+        {
+            var categorias = _context.Categorias;
+            return Ok(categorias);
+        }
 
         [HttpPost]
         public IActionResult CriarCategoria(Categoria categoria)
@@ -43,6 +49,8 @@ namespace tech_test_payment_api.Controllers
             _context.SaveChanges();
             return CreatedAtAction(nameof(ObterCategoriaPorId), new { categoriaId = categoria.CategoriaID }, categoria);    
         }   
+
+
 
     }
 }
