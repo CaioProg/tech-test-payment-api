@@ -21,10 +21,10 @@ namespace tech_test_payment_api.Controllers
             _context = context;
         }
 
-        [HttpGet("{categoriaId}")]
-        public IActionResult ObterCategoriaPorId(int categoriaId)
+        [HttpGet("{ObterCategoriaPorId}")]
+        public IActionResult ObterCategoriaPorId(int ObterCategoriaPorId)
         {
-            var categoria = _context.Categorias.Find(categoriaId);
+            var categoria = _context.Categorias.Find(ObterCategoriaPorId);
 
             if(categoria != null)
                 return Ok(categoria);
@@ -47,10 +47,37 @@ namespace tech_test_payment_api.Controllers
 
             _context.Add(categoria);
             _context.SaveChanges();
-            return CreatedAtAction(nameof(ObterCategoriaPorId), new { categoriaId = categoria.CategoriaID }, categoria);    
+            return CreatedAtAction(nameof(ObterCategoriaPorId), new { ObterCategoriaPorId = categoria.CategoriaID }, categoria);    
         }   
 
+        [HttpPut("{id}")]
+        public IActionResult AtualizarCategoria(int id, Categoria categoria)
+        {   
+            var categoriaBanco = _context.Categorias.Find(id);
 
+            if(categoriaBanco == null)
+                return NotFound();
 
+            categoriaBanco.Nome = categoria.Nome;
+
+            _context.Categorias.Update(categoriaBanco);
+            _context.SaveChanges();
+
+            return Ok(categoriaBanco);
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeletarCategoria(int id)
+        {
+            var categoria = _context.Categorias.Find(id);
+
+            if(categoria == null)
+                return NotFound();
+
+            _context.Categorias.Remove(categoria);
+            _context.SaveChanges();
+
+            return NoContent();
+        }
     }
 }
