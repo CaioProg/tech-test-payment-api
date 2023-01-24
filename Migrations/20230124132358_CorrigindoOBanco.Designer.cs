@@ -12,8 +12,8 @@ using tech_test_payment_api.Context;
 namespace techtestpaymentapi.Migrations
 {
     [DbContext(typeof(OrganizadorContext))]
-    [Migration("20230122200646_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230124132358_CorrigindoOBanco")]
+    partial class CorrigindoOBanco
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -109,12 +109,6 @@ namespace techtestpaymentapi.Migrations
 
                     b.HasKey("VendaId");
 
-                    b.HasIndex("ClienteID");
-
-                    b.HasIndex("ProdutoID");
-
-                    b.HasIndex("VendedorId");
-
                     b.ToTable("Vendas");
                 });
 
@@ -152,48 +146,6 @@ namespace techtestpaymentapi.Migrations
                         .IsRequired();
 
                     b.Navigation("Categoria");
-                });
-
-            modelBuilder.Entity("tech_test_payment_api.Models.Venda", b =>
-                {
-                    b.HasOne("tech_test_payment_api.Models.Cliente", "Cliente")
-                        .WithMany("Vendas")
-                        .HasForeignKey("ClienteID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("tech_test_payment_api.Models.Produto", "Produto")
-                        .WithMany("Vendas")
-                        .HasForeignKey("ProdutoID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("tech_test_payment_api.Models.Vendedor", "Vendedor")
-                        .WithMany("Vendas")
-                        .HasForeignKey("VendedorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cliente");
-
-                    b.Navigation("Produto");
-
-                    b.Navigation("Vendedor");
-                });
-
-            modelBuilder.Entity("tech_test_payment_api.Models.Cliente", b =>
-                {
-                    b.Navigation("Vendas");
-                });
-
-            modelBuilder.Entity("tech_test_payment_api.Models.Produto", b =>
-                {
-                    b.Navigation("Vendas");
-                });
-
-            modelBuilder.Entity("tech_test_payment_api.Models.Vendedor", b =>
-                {
-                    b.Navigation("Vendas");
                 });
 #pragma warning restore 612, 618
         }

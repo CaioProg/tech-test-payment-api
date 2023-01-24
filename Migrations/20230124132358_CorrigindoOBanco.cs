@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace techtestpaymentapi.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class CorrigindoOBanco : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -35,6 +35,24 @@ namespace techtestpaymentapi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Clientes", x => x.ClienteID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Vendas",
+                columns: table => new
+                {
+                    VendaId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ItensVendidos = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Data = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ProdutoID = table.Column<int>(type: "int", nullable: false),
+                    ClienteID = table.Column<int>(type: "int", nullable: false),
+                    VendedorId = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Vendas", x => x.VendaId);
                 });
 
             migrationBuilder.CreateTable(
@@ -74,74 +92,23 @@ namespace techtestpaymentapi.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Vendas",
-                columns: table => new
-                {
-                    VendaId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ItensVendidos = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Data = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ProdutoID = table.Column<int>(type: "int", nullable: false),
-                    ClienteID = table.Column<int>(type: "int", nullable: false),
-                    VendedorId = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Vendas", x => x.VendaId);
-                    table.ForeignKey(
-                        name: "FK_Vendas_Clientes_ClienteID",
-                        column: x => x.ClienteID,
-                        principalTable: "Clientes",
-                        principalColumn: "ClienteID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Vendas_Produtos_ProdutoID",
-                        column: x => x.ProdutoID,
-                        principalTable: "Produtos",
-                        principalColumn: "ProdutoID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Vendas_Vendedors_VendedorId",
-                        column: x => x.VendedorId,
-                        principalTable: "Vendedors",
-                        principalColumn: "VendedorId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Produtos_CategoriaID",
                 table: "Produtos",
                 column: "CategoriaID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Vendas_ClienteID",
-                table: "Vendas",
-                column: "ClienteID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Vendas_ProdutoID",
-                table: "Vendas",
-                column: "ProdutoID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Vendas_VendedorId",
-                table: "Vendas",
-                column: "VendedorId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Vendas");
-
-            migrationBuilder.DropTable(
                 name: "Clientes");
 
             migrationBuilder.DropTable(
                 name: "Produtos");
+
+            migrationBuilder.DropTable(
+                name: "Vendas");
 
             migrationBuilder.DropTable(
                 name: "Vendedors");

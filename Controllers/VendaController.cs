@@ -19,15 +19,23 @@ namespace tech_test_payment_api.Controllers
             _context = context;
         }
 
-        [HttpGet("{id}")]
-        public IActionResult BuscaVendaPorId(int vendaId) 
+        [HttpGet("{ObterVendaPorId}")]
+        public IActionResult ObterVendaPorId(int ObterVendaPorId) 
         {
-            var venda = _context.Vendas.Find(vendaId);
+            var venda = _context.Vendas.Find(ObterVendaPorId);
 
             if(venda != null)
                 return Ok(venda);
 
             return NotFound();
+        }
+
+        [HttpPost]
+        public IActionResult CriarCategoria(Venda venda)
+        {
+            _context.Add(venda);
+            _context.SaveChanges();
+            return CreatedAtAction(nameof(ObterVendaPorId), new { ObterVendaPorId = venda.VendaId }, venda);    
         }
     }
 }
