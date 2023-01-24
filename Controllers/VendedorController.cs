@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 namespace tech_test_payment_api.Controllers
 {
     [Route("[controller]")]
-    public class VendedorController : Controller
+    public class VendedorController : ControllerBase
     {
         
     }

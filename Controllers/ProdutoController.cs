@@ -58,7 +58,7 @@ namespace tech_test_payment_api.Controllers
         {
             var produtoBanco = _context.Produtos.Find(id);
 
-            if(id == null)
+            if(produtoBanco == null)
                 return NotFound();
 
             produtoBanco.Nome = produto.Nome;
@@ -76,7 +76,7 @@ namespace tech_test_payment_api.Controllers
         {
             var produto = _context.Produtos.Find(id);
 
-            if(id == null)
+            if(produto == null)
                 return NotFound();
             
             _context.Produtos.Remove(produto);

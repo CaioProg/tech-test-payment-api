@@ -9,8 +9,5 @@ namespace tech_test_payment_api.Models
     {
         public int ClienteID { get; set; }
         public string Endereco { get; set; }
-
-        public virtual List<Venda> Vendas { get; set; }
-
     }
 }
