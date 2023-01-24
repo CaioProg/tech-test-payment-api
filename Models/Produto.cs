@@ -12,7 +12,5 @@ namespace tech_test_payment_api.Models
         public decimal Preco { get; set; }
         public int CategoriaID { get; set; }
         public Categoria Categoria { get; set; }
-        public virtual List<Venda> Vendas { get; set; }
-
     }
 }
