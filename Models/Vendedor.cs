@@ -12,6 +12,5 @@ namespace tech_test_payment_api.Models
         public long Cpf { get; set; }
         public string Email { get; set; }
         public long Telefone { get; set; }
-        public virtual List<Venda> Vendas { get; set; }
     }
 }

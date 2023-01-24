@@ -36,7 +36,7 @@ namespace tech_test_payment_api.Controllers
         public IActionResult CriarCliente(Cliente cliente)
         {
             if(cliente.Endereco == "")
-                return BadRequest(new { Erro = "O campo Nome é obrigatório!" });
+                return BadRequest(new { Erro = "O campo Endereço é obrigatório!" });
             
             _context.Clientes.Add(cliente);
             _context.SaveChanges();
