@@ -18,6 +18,7 @@ namespace tech_test_payment_api.Controllers
         {
             _context = context;
         }
+        string messageErrorVenda = "Esse Id não está vinculado a nenhuma Venda.";
 
         [HttpGet("{ObterVendaPorId}")]
         public IActionResult ObterVendaPorId(int ObterVendaPorId) 
@@ -27,8 +28,9 @@ namespace tech_test_payment_api.Controllers
             if(venda != null)
                 return Ok(venda);
 
-            return NotFound();
+            return NotFound(messageErrorVenda);
         }
+
         [HttpGet("ObterTodasAsVendas")]
         public IActionResult ObterTodasAsVendas()
         {
@@ -117,10 +119,10 @@ namespace tech_test_payment_api.Controllers
             var venda = _context.Vendas.Find(id);
             
             if(venda == null)
-                return BadRequest("Esse Id não está vinculado a nenhuma venda!");
+                return BadRequest(messageErrorVenda);
 
             _context.Remove(venda);
-            _context.SaveChanges(); 
+            _context.SaveChanges();
 
             return NoContent();
         }
