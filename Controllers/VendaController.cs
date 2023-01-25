@@ -34,7 +34,7 @@ namespace tech_test_payment_api.Controllers
         public IActionResult CriarVenda(Venda venda)
         {
             if(venda.Status != "Aguardando pagamento")
-                return BadRequest("Na criação da venda só é permitido o Status: Aguardando Pagamento");
+                return BadRequest("Na criação da venda só é permitido o Status: Aguardando pagamento");
             
             _context.Add(venda);
             _context.SaveChanges();
@@ -47,31 +47,38 @@ namespace tech_test_payment_api.Controllers
             var vendaBanco = _context.Vendas.Find(id);
             string verificacaoStatus = venda.Status;
 
+            string logicaStatus = "Não é possível editar a venda pra esse Status! Essas são as movimentações de Status aceitas: \n \n" + 
+                                  "De: Aguardando pagamento Para: Pagamento Aprovado \n" +
+                                  "De: Aguardando pagamento Para: Cancelada \n" +
+                                  "De: Pagamento Aprovado Para: Enviado para Transportadora \n" +
+                                  "De: Pagamento Aprovado Para: Cancelada \n" +
+                                  "De: Enviado para Transportadora Para: Entregue \n";
+
             switch (verificacaoStatus)
             {
-                case "Pagamento aprovado":
+                case "Pagamento Aprovado":
                     if(vendaBanco.Status == "Aguardando pagamento")
                     {
                         vendaBanco.Status = venda.Status;
                         break;
                     }
-                        return BadRequest($"Não é possível editar a venda pra esse Status! {vendaBanco.Status}");
+                        return BadRequest(logicaStatus);
 
                 case "Cancelada":
-                    if(vendaBanco.Status == "Aguardando pagamento" || vendaBanco.Status == "Pagamento aprovado")
+                    if(vendaBanco.Status == "Aguardando pagamento" || vendaBanco.Status == "Pagamento Aprovado")
                     {
                         vendaBanco.Status = venda.Status;
                         break;
                     }
-                        return BadRequest($"Não é possível editar a venda pra esse Status! {vendaBanco.Status}");
+                        return BadRequest(logicaStatus);
 
                 case "Enviado para Transportadora":
-                    if(vendaBanco.Status == "Pagamento aprovado")
+                    if(vendaBanco.Status == "Pagamento Aprovado")
                     {
                         vendaBanco.Status = venda.Status;
                         break;
                     }
-                        return BadRequest($"Não é possível editar a venda pra esse Status! {vendaBanco.Status}");
+                        return BadRequest(logicaStatus);
 
                 case "Entregue":
                     if(vendaBanco.Status == "Enviado para Transportadora")
@@ -79,11 +86,10 @@ namespace tech_test_payment_api.Controllers
                         vendaBanco.Status = venda.Status;
                         break;
                     }                        
-                        return BadRequest($"Não é possível editar a venda pra esse Status! {vendaBanco.Status}");
+                        return BadRequest(logicaStatus);
 
                 default:
-                    return BadRequest($"Escolha um Status válido!");
-                    break;
+                    return BadRequest($"Escolha um Status válido! \nLista de Status: Pagamento Aprovado, Enviado para Transportadora, Entregue, Cancelada,");
             }
 
             vendaBanco.ItensVendidos = venda.ItensVendidos;
