@@ -20,6 +20,8 @@ namespace tech_test_payment_api.Controllers
         {
             _context = context;
         }
+        string messageErrorVendedor = "Esse Id não está vinculado a nenhum Vendedor.";
+
 
         [HttpGet("{ObterVendedorPorId}")]
         public IActionResult ObterVendedorPorId(int ObterVendedorPorId)
@@ -29,7 +31,7 @@ namespace tech_test_payment_api.Controllers
             if(vendedor != null)
                 return Ok(vendedor);
 
-            return NotFound();
+            return NotFound(messageErrorVendedor);
         }
         
         [HttpGet("ObterTodasOsVendedores")]
@@ -56,7 +58,7 @@ namespace tech_test_payment_api.Controllers
             var vendedorBanco = _context.Vendedors.Find(id);
 
             if(vendedorBanco == null)
-                return NotFound();
+                return NotFound(messageErrorVendedor);
 
             vendedorBanco.Nome = vendedor.Nome;
 
@@ -72,7 +74,7 @@ namespace tech_test_payment_api.Controllers
             var vendedor = _context.Vendedors.Find(id);
 
             if(vendedor == null)
-                return NotFound();
+                return NotFound(messageErrorVendedor);
 
             _context.Vendedors.Remove(vendedor);
             _context.SaveChanges();
