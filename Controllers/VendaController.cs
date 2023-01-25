@@ -110,5 +110,19 @@ namespace tech_test_payment_api.Controllers
 
             return Ok(vendaBanco);
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeletarVenda(int id)
+        {
+            var venda = _context.Vendas.Find(id);
+            
+            if(venda == null)
+                return BadRequest("Esse Id não está vinculado a nenhuma venda!");
+
+            _context.Remove(venda);
+            _context.SaveChanges(); 
+
+            return NoContent();
+        }
     }
 }
