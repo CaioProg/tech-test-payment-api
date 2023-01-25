@@ -31,8 +31,11 @@ namespace tech_test_payment_api.Controllers
         }
 
         [HttpPost]
-        public IActionResult CriarCategoria(Venda venda)
+        public IActionResult CriarVenda(Venda venda)
         {
+            if(venda.Status.ToString() != "Aguardando pagamento")
+                return BadRequest("Na criação da venda só é permitido o Status: Aguardando Pagamento");
+            
             _context.Add(venda);
             _context.SaveChanges();
             return CreatedAtAction(nameof(ObterVendaPorId), new { ObterVendaPorId = venda.VendaId }, venda);    
