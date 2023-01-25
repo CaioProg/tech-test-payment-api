@@ -21,7 +21,7 @@ namespace tech_test_payment_api.Controllers
             _context = context;
         }
 
-        string messageError = "Esse Id não está vinculado a nenhuma Categoria.";
+        string messageErrorCategoria = "Esse Id não está vinculado a nenhuma Categoria.";
 
         [HttpGet("{ObterCategoriaPorId}")]
         public IActionResult ObterCategoriaPorId(int ObterCategoriaPorId)
@@ -31,7 +31,7 @@ namespace tech_test_payment_api.Controllers
             if(categoria != null)
                 return Ok(categoria);
 
-            return NotFound(messageError);
+            return NotFound(messageErrorCategoria);
         }
         
         [HttpGet("ObterTodasAsCategorias")]
@@ -58,7 +58,7 @@ namespace tech_test_payment_api.Controllers
             var categoriaBanco = _context.Categorias.Find(id);
 
             if(categoriaBanco == null)
-                return NotFound(messageError);
+                return NotFound(messageErrorCategoria);
 
             categoriaBanco.Nome = categoria.Nome;
 
@@ -74,7 +74,7 @@ namespace tech_test_payment_api.Controllers
             var categoria = _context.Categorias.Find(id);
 
             if(categoria == null)
-                return NotFound(messageError);
+                return NotFound(messageErrorCategoria);
 
             _context.Categorias.Remove(categoria);
             _context.SaveChanges();

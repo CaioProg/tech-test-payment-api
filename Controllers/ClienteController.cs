@@ -21,13 +21,15 @@ namespace tech_test_payment_api.Controllers
             _context = context;
         }
 
+        string messageErrorCliente = "Esse Id não está vinculado a nenhum Cliente.";
+
         [HttpGet("{ObterClientePorId}")]
         public IActionResult ObterClientePorId(int ObterClientePorId)
         {
             var cliente = _context.Clientes.Find(ObterClientePorId);
             
             if(cliente == null)
-                return NotFound();
+                return NotFound(messageErrorCliente);
 
             return Ok(cliente);    
         }
@@ -58,7 +60,7 @@ namespace tech_test_payment_api.Controllers
             var clienteBanco = _context.Clientes.Find(id);
 
             if(clienteBanco == null)
-                return NotFound();
+                return NotFound(messageErrorCliente);
 
             clienteBanco.Endereco = cliente.Endereco;
             
@@ -74,7 +76,7 @@ namespace tech_test_payment_api.Controllers
             var cliente = _context.Clientes.Find(id);
 
             if(cliente == null)
-                return NotFound();
+                return NotFound(messageErrorCliente);
             
             _context.Clientes.Remove(cliente);
             _context.SaveChanges();
