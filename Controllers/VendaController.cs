@@ -29,6 +29,14 @@ namespace tech_test_payment_api.Controllers
 
             return NotFound();
         }
+        [HttpGet("ObterTodasAsVendas")]
+        public IActionResult ObterTodasAsVendas()
+        {
+            var vendas = _context.Vendas;
+
+            return Ok(vendas);
+
+        }
 
         [HttpPost]
         public IActionResult CriarVenda(Venda venda)
