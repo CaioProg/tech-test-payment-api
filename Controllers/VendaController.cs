@@ -40,5 +40,22 @@ namespace tech_test_payment_api.Controllers
             _context.SaveChanges();
             return CreatedAtAction(nameof(ObterVendaPorId), new { ObterVendaPorId = venda.VendaId }, venda);    
         }
+
+        [HttpPut]
+        public IActionResult EditarVenda(Venda venda, int id)
+        {
+             var vendaBanco = _context.Vendas.Find(id);
+
+            vendaBanco.ItensVendidos = venda.ItensVendidos;
+            vendaBanco.Data = venda.Data;
+            vendaBanco.ClienteID = venda.ClienteID;
+            vendaBanco.VendedorId = venda.VendedorId;
+            vendaBanco.Status = venda.Status;
+
+            _context.Vendas.Update(vendaBanco);
+            _context.SaveChanges();
+
+            return Ok(vendaBanco);
+        }
     }
 }
