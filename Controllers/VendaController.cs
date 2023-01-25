@@ -43,6 +43,9 @@ namespace tech_test_payment_api.Controllers
         [HttpPost]
         public IActionResult CriarVenda(Venda venda)
         {
+            if(venda.ItensVendidos == null || venda.ItensVendidos == " " || venda.ItensVendidos == "")
+                return BadRequest("O campo ItensVendidos não pode estar vazio!");
+
             if(venda.Status != "Aguardando pagamento")
                 return BadRequest("Na criação da venda só é permitido o Status: Aguardando pagamento");
             
