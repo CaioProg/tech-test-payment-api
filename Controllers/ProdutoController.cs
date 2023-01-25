@@ -20,7 +20,7 @@ namespace tech_test_payment_api.Controllers
         {
             _context = context;
         }
-
+        string messageErrorProduto = "Esse Id não está vinculado a nenhum Produto.";
 
         [HttpGet("{ObterProdutoPorId}")]
         public IActionResult ObterProdutoPorId(int ObterProdutoPorId)
@@ -28,7 +28,7 @@ namespace tech_test_payment_api.Controllers
             var produto = _context.Produtos.Find(ObterProdutoPorId);
             
             if(produto == null)
-            return NotFound();
+            return NotFound(messageErrorProduto);
 
             return Ok(produto);    
         }
@@ -59,7 +59,7 @@ namespace tech_test_payment_api.Controllers
             var produtoBanco = _context.Produtos.Find(id);
 
             if(produtoBanco == null)
-                return NotFound();
+                return NotFound(messageErrorProduto);
 
             produtoBanco.Nome = produto.Nome;
             produtoBanco.Categoria = produto.Categoria;
@@ -77,7 +77,7 @@ namespace tech_test_payment_api.Controllers
             var produto = _context.Produtos.Find(id);
 
             if(produto == null)
-                return NotFound();
+                return NotFound(messageErrorProduto);
             
             _context.Produtos.Remove(produto);
             _context.SaveChanges();
