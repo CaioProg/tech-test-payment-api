@@ -13,6 +13,6 @@ namespace tech_test_payment_api.Models
         public int ProdutoID { get; set; }
         public int ClienteID { get; set; }
         public int VendedorId { get; set; }
-        public EnumStatusVenda Status { get; set; }
+        public string Status { get; set; }
     }
 }
